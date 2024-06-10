@@ -18,6 +18,11 @@ const Title = styled.h1`
   color: #333;
   font-size: 2rem;
   margin-bottom: 20px;
+
+  @media (max-width: 600px) {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
 `;
 
 const Table = styled.table`
@@ -25,6 +30,12 @@ const Table = styled.table`
   max-width: 1200px;
   border-collapse: collapse;
   margin-bottom: 20px;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+  }
 `;
 
 const Th = styled.th`
@@ -32,12 +43,22 @@ const Th = styled.th`
   padding: 10px;
   border: 1px solid #ddd;
   text-align: left;
+
+  @media (max-width: 600px) {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
 `;
 
 const Td = styled.td`
   padding: 10px;
   border: 1px solid #ddd;
   text-align: left;
+
+  @media (max-width: 600px) {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
 `;
 
 const Button = styled.button`
@@ -58,16 +79,30 @@ const Button = styled.button`
           background-color: #007bff;
           color: white;
         `}
+
+  @media (max-width: 600px) {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    margin: 5px;
+  }
 `;
 
 const Loading = styled.p`
   font-size: 1.2rem;
   color: #333;
+
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
 `;
 
 const Error = styled.p`
   font-size: 1.2rem;
   color: #e53935;
+
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
 `;
 
 const CryptoList = () => {
