@@ -14,14 +14,33 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+`;
+
+const Logo = styled.img`
+  width: 100px;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+
+  @media (max-width: 600px) {
+    width: 80px;
+    margin-right: 10px;
+  }
+`;
+
 const Title = styled.h1`
   color: #333;
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin: 0;
 
   @media (max-width: 600px) {
     font-size: 1.5rem;
-    margin-bottom: 15px;
   }
 `;
 
@@ -169,55 +188,55 @@ const CryptoList = () => {
   if (error) return <Error>{error}</Error>;
 
   return (
-    <div className="crypto-container">
-      <img src={logo} alt="CryptoOwl Logo" className="logo" style={{ width: '100px', height: 'auto', borderRadius: '50%', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', margin: '20px' }} />
-      <Container>
+    <Container>
+      <Header>
+        <Logo src={logo} alt="CryptoOwl Logo" />
         <Title>CryptoOwl</Title>
-        <input
-          type="text"
-          placeholder="Search for a cryptocurrency..."
-          onChange={handleSearch}
-          style={{ padding: '10px', marginBottom: '20px', borderRadius: '5px', border: '1px solid #ccc', width: '100%', maxWidth: '400px' }}
-        />
-        <div>
-          <Button primary onClick={() => handleSort('name')}>Sort by Name</Button>
-          <Button primary onClick={() => handleSort('price')}>Sort by Price</Button>
-          <Button primary onClick={() => handleSort('market_cap')}>Sort by Market Cap</Button>
-          <Button onClick={handleRefresh}>Refresh</Button>
-        </div>
-        <Table>
-          <thead>
-            <tr>
-              <Th>#</Th>
-              <Th>Coin</Th>
-              <Th>Price</Th>
-              <Th>24h</Th>
-              <Th>24h Volume</Th>
-              <Th>Market Cap</Th>
+      </Header>
+      <input
+        type="text"
+        placeholder="Search for a cryptocurrency..."
+        onChange={handleSearch}
+        style={{ padding: '10px', marginBottom: '20px', borderRadius: '5px', border: '1px solid #ccc', width: '100%', maxWidth: '400px' }}
+      />
+      <div>
+        <Button primary onClick={() => handleSort('name')}>Sort by Name</Button>
+        <Button primary onClick={() => handleSort('price')}>Sort by Price</Button>
+        <Button primary onClick={() => handleSort('market_cap')}>Sort by Market Cap</Button>
+        <Button onClick={handleRefresh}>Refresh</Button>
+      </div>
+      <Table>
+        <thead>
+          <tr>
+            <Th>#</Th>
+            <Th>Coin</Th>
+            <Th>Price</Th>
+            <Th>24h</Th>
+            <Th>24h Volume</Th>
+            <Th>Market Cap</Th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredCryptos.map((crypto, index) => (
+            <tr key={crypto.id}>
+              <Td>{index + 1}</Td>
+              <Td>
+                <Link to={`/coin/${crypto.id}`} style={{ textDecoration: 'none', color: '#007bff', display: 'flex', alignItems: 'center' }}>
+                  <img src={crypto.image} alt={`${crypto.name} logo`} style={{ width: '20px', height: '20px', marginRight: '10px' }} />
+                  {crypto.name} ({crypto.symbol.toUpperCase()})
+                </Link>
+              </Td>
+              <Td>${crypto.current_price.toFixed(2)}</Td>
+              <Td style={{ color: crypto.price_change_percentage_24h > 0 ? '#4caf50' : '#e53935' }}>
+                {crypto.price_change_percentage_24h?.toFixed(2)}%
+              </Td>
+              <Td>${crypto.total_volume.toLocaleString()}</Td>
+              <Td>${crypto.market_cap.toLocaleString()}</Td>
             </tr>
-          </thead>
-          <tbody>
-            {filteredCryptos.map((crypto, index) => (
-              <tr key={crypto.id}>
-                <Td>{index + 1}</Td>
-                <Td>
-                  <Link to={`/coin/${crypto.id}`} style={{ textDecoration: 'none', color: '#007bff', display: 'flex', alignItems: 'center' }}>
-                    <img src={crypto.image} alt={`${crypto.name} logo`} style={{ width: '20px', height: '20px', marginRight: '10px' }} />
-                    {crypto.name} ({crypto.symbol.toUpperCase()})
-                  </Link>
-                </Td>
-                <Td>${crypto.current_price.toFixed(2)}</Td>
-                <Td style={{ color: crypto.price_change_percentage_24h > 0 ? '#4caf50' : '#e53935' }}>
-                  {crypto.price_change_percentage_24h?.toFixed(2)}%
-                </Td>
-                <Td>${crypto.total_volume.toLocaleString()}</Td>
-                <Td>${crypto.market_cap.toLocaleString()}</Td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Container>
-    </div>
+          ))}
+        </tbody>
+      </Table>
+    </Container>
   );
 };
 
